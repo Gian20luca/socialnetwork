@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducers } from './Redux/Reducers';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 const store = createStore(rootReducers);
 
