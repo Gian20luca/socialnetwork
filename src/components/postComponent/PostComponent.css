@@ -1,0 +1,9 @@
+.immagine{
+    width: 100%;
+}
+.post{
+    width: auto;
+    border: lightgray 1px solid ;
+    
+    border-radius: 2%;
+}

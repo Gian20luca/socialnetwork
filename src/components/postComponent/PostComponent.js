@@ -3,18 +3,31 @@ import "./PostComponent.css";
 import { CallApi } from "../../service/callApi";
 
 export const PostComponent = () => {
-  /* const [posts, setPosts] = useState([]);
   let service = new CallApi.getInstance();
-  let a = service.getPosts();
-  setPosts(a);
-  //useEffect(()=>{console.log( "post:", posts)})
-  console.log('post:',posts) */
-  
+  const [post, setPost] = useState();
 
+  useEffect(() => {
+    service.getPosts().then((response) => setPost(response.data));
+  }, []);
+
+  //post && console.log("pos2", post[0]);
+  //console.log(prova)
   return (
-    <div>
-     ciao
-     
+    <div className="mt-5 mb-5">
+      {post &&
+        post.map((item) => {
+          return (
+            <div key={item.id} className=" container ">
+              <div  className=" row justify-content-md-center  ">
+                <div className="col-12 col-xl-5 post">
+                  <img src={item.image} className="immagine"></img>
+                  <figcaption>{item.description}</figcaption>
+                  <i className="fa fa-heart">{item.like}</i>
+                </div>
+              </div>
+            </div>
+          );
+        })}
     </div>
   );
 };
