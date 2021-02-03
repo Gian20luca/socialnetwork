@@ -23,24 +23,29 @@ getUser = ()=>{
   axios.get(' https://60181603971d850017a3f861.mockapi.io/users')
   .then(function (response) {
     // handle success
-    console.log(response.data);
+    //console.log(response.data);
   })
   .catch(function (error) {
     // handle error
     console.log(error);
   })}
 
-  //post User Api modificare
-  postUser = (users)=>{axios.post(' https://60181603971d850017a3f861.mockapi.io/users')
-
-  }
+  //post User 
+ postUser(datavalue){
+  return axios({
+    method: 'POST',
+    url: 'https://60181603971d850017a3f861.mockapi.io/users/',
+    data:datavalue
+    
+});
+ }
 
 
   //GetPost 
-  getPosts = ()=>{axios.get(' https://60181603971d850017a3f861.mockapi.io/posts')
+  getPosts = ()=>{axios.get(' https://60181603971d850017a3f861.mockapi.io/posts/')
   .then(function (response) {
     // handle success
-    console.log(response.data);
+    //console.log(response.data);
   })
   .catch(function (error) {
     // handle error

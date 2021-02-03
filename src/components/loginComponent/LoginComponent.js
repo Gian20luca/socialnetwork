@@ -3,6 +3,9 @@ import { login, logout } from "../../Redux/Actions/loggedActions";
 import { useSelector, useDispatch } from "react-redux";
 import { CallApi } from "../../service/callApi";
 import { RegisterComponent } from "../registerComponent/RegisterComponent";
+import { PostComponent } from "../postComponent/PostComponent";
+
+
  
 export const LoginComponent = () => {
   const [login, setLogin] = useState({
@@ -13,7 +16,7 @@ export const LoginComponent = () => {
   const logged = useSelector((state) => state.loggedReducer);
   const dispatch = useDispatch();
  
-  console.log("Connesso: ", logged);
+ // console.log("Connesso: ", logged);
  
   useEffect(() => {
     service.getUser();
@@ -30,6 +33,9 @@ export const LoginComponent = () => {
  
   return (
     <div>
+      {/* spostarlo dove serve */}
+      <PostComponent/>
+
       {!logged ? (
         <div>
           <form onSubmit={handleSubmit}>
@@ -39,6 +45,7 @@ export const LoginComponent = () => {
             <input type='password' name='password' placeholder='Password' value={login.password} onChange={handleChange}></input>
             <button className="btn btn-primary" onClick={() => dispatch(login())}>Login</button>
           </form> 
+          
           <RegisterComponent />
         </div>
       ) : (
