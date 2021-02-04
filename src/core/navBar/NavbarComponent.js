@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./NavbarComponent.css";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Redux/Actions/loggedActions";
@@ -6,6 +6,11 @@ import { Link } from "react-router-dom";
 
 export const NavbarComponent = () => {
   const dispatch = useDispatch();
+  
+ let user = JSON.parse(sessionStorage.getItem('user'));
+console.log ("user->", user[0].name)
+ 
+ 
 
 
   const functionLogut = () => {
@@ -75,20 +80,20 @@ export const NavbarComponent = () => {
               <ul className="navbar-nav ml-auto">
                 <li>
                   <Link to="/" className="nav-item nav-link active">
-                    Home
+                  <i className="fa fa-home "></i> Home
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="nav-item nav-link">
-                    Profile
-                  </a>
+                  {user &&<a href="#" className="nav-item nav-link">
+                  <i className="fa fa-user-circle pr-2"></i>{user[0].name}
+                  </a>}
                 </li>
                 <li>
                   <a
                     href="#"
                     onClick={functionLogut}
                     className="nav-item nav-link"
-                  >
+                  ><i className="fa fa-sign-out pr-2"></i>
                     Log Out
                   </a>
                 </li>

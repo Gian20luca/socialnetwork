@@ -151,9 +151,10 @@ export const LoginComponent = () => {
                     <label className='form__label'>Password</label>
                   </div>
 
-                  <button type='submit' className="form__button" disabled={!userLogin.email || !userLogin.password}>login</button>
+                  <button type='submit' className="form__button offset-md-3 col-md-6 offset-md-3" disabled={!userLogin.email || !userLogin.password}>login</button>
 
                 </form>
+                <hr></hr>
                 <RegisterComponent />
               </div>
 

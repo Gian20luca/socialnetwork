@@ -12,12 +12,11 @@ export const RegisterComponent = () => {
     username: "",
     email: "",
     password: "",
-    token: "",
   });
 
 
 
-  
+
   const showModal = (event) => {
     event.preventDefault();
     setViewModal(true);
@@ -43,72 +42,174 @@ export const RegisterComponent = () => {
   };
 
   return (
+
+
     <div >
       <div>
         <form onSubmit={showModal}>
-          <button type="submit" className="btn btn-primary">Registrati</button>
+          <button type="submit" className="form__button__register offset-md-3 col-md-6 offset-md-3">Registrati</button>
         </form>
       </div>
 
       {viewModal && (
         <div className="container modale" >
-          <h2>Register</h2>
-          <i className="fa fa-2x fa-times-circle 2x float-right mb-3" onClick={deleteModal}></i>
-          {register && (
-            <form onSubmit={handleSubmit} className="form-group">
-              <label htmlFor="name">Nome </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="form-control"
-                value={register.name}
-                onChange={handleChange}
-              ></input>
-              <label htmlFor="surname">Cognome </label>
-              <input
-                type="text"
-                name="surname"
-                id="cognome"
-                className="form-control"
-                value={register.surname}
-                onChange={handleChange}
-              ></input>
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                name="username"
-                id="username"
-                className="form-control"
-                value={register.username}
-                onChange={handleChange}
-              ></input>
-              <label htmlFor="email">E-mail</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="form-control"
-                value={register.email}
-                onChange={handleChange}
-              ></input>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                className="form-control"
-                value={register.password}
-                onChange={handleChange}
-              ></input>
+          <div className='l-form__register'>
+            
+            
+            {register && (
 
-            {!register.name || !register.surname ||!register.email|| !register.username ||  !register.password ? <button   disabled className="btn btn-danger  mt-3 col-3">
-                Registrati
-              </button>: <button type="submit"  className="btn btn-primary  mt-3 col-3">Registrati</button>}
-            </form>
-          )}
+              <form onSubmit={handleSubmit} className="form__register">
+                <i className="fa fa-2x fa-times float-right mb-3" onClick={deleteModal}></i>
+                <h1 className='form__title__register'>Register</h1>
+                
+                <div className='form__div__register'>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder=' '
+                    className="form__input__register"
+                    value={register.name}
+                    onChange={handleChange}
+                  ></input>
+                  <label htmlFor="name" className='form__label__register'>Nome </label>
+                </div>
+
+                <div className='form__div__register'>
+                  <input
+                    type="text"
+                    name="surname"
+                    id="cognome"
+                    placeholder=' '
+                    className="form__input__register"
+                    value={register.surname}
+                    onChange={handleChange}
+                  ></input>
+                  <label htmlFor="surname" className='form__label__register'>Cognome </label>
+                </div>
+
+
+                <div className='form__div__register'>
+
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder=' '
+                    className="form__input__register"
+                    value={register.username}
+                    onChange={handleChange}
+                  ></input>
+                  <label htmlFor="username" className='form__label__register'>Username</label>
+                </div>
+
+                <div className='form__div__register'>
+
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder=' '
+                    className="form__input__register"
+                    value={register.email}
+                    onChange={handleChange}
+                  ></input>
+                  <label htmlFor="email" className='form__label__register'>E-mail</label>
+                </div>
+
+                <div className='form__div__register'>
+
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder=' '
+                    className="form__input__register"
+                    value={register.password}
+                    onChange={handleChange}
+                  ></input>
+                  <label htmlFor="password" className='form__label__register'>Password</label>
+                </div>
+
+                <button disabled={!register.name || !register.surname || !register.email || !register.username || !register.password} className="form__button__register offset-md-3 col-md-6 offset-md-3">
+                  Registrati
+            </button>
+              </form>
+            )}
+          </div>
         </div>
       )}
     </div>
+
+
+
+    // <div >
+    //   <div>
+    //     <form onSubmit={showModal}>
+    //       <button type="submit" className="btn btn-primary">Registrati</button>
+    //     </form>
+    //   </div>
+
+    //   {viewModal && (
+    //     <div className="container modale" >
+    //       <h1>Register</h1>
+    //       <i className="fa fa-2x fa-times-circle 2x float-right mb-3" onClick={deleteModal}></i>
+    //       {register && (
+
+    //         <form onSubmit={handleSubmit} className="form-group">
+    //           <label htmlFor="name">Nome </label>
+    //           <input
+    //             type="text"
+    //             name="name"
+    //             id="name"
+    //             className="form-control"
+    //             value={register.name}
+    //             onChange={handleChange}
+    //           ></input>
+    //           <label htmlFor="surname">Cognome </label>
+    //           <input
+    //             type="text"
+    //             name="surname"
+    //             id="cognome"
+    //             className="form-control"
+    //             value={register.surname}
+    //             onChange={handleChange}
+    //           ></input>
+    //           <label htmlFor="username">Username</label>
+    //           <input
+    //             type="text"
+    //             name="username"
+    //             id="username"
+    //             className="form-control"
+    //             value={register.username}
+    //             onChange={handleChange}
+    //           ></input>
+    //           <label htmlFor="email">E-mail</label>
+    //           <input
+    //             type="email"
+    //             name="email"
+    //             id="email"
+    //             className="form-control"
+    //             value={register.email}
+    //             onChange={handleChange}
+    //           ></input>
+    //           <label htmlFor="password">Password</label>
+    //           <input
+    //             type="password"
+    //             name="password"
+    //             id="password"
+    //             className="form-control"
+    //             value={register.password}
+    //             onChange={handleChange}
+    //           ></input>
+
+    //         {!register.name || !register.surname ||!register.email|| !register.username ||  !register.password ? <button   disabled className="btn btn-danger  mt-3 col-3">
+    //             Registrati
+    //           </button>: <button type="submit"  className="btn btn-primary  mt-3 col-3">Registrati</button>}
+    //         </form>
+    //       )}
+    //     </div>
+    //   )}
+    // </div>
   );
 };
