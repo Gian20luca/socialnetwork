@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import "./NavbarComponent.css";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Redux/Actions/loggedActions";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 
 export const NavbarComponent = () => {
   const dispatch = useDispatch();
   
  let user = JSON.parse(sessionStorage.getItem('user'));
-console.log ("user->", user[0].name)
+// console.log ("user->", user[0].name)
  
- 
+let _history = useHistory();
 
 
   const functionLogut = () => {
@@ -18,7 +18,7 @@ console.log ("user->", user[0].name)
     sessionStorage.removeItem('authenticated');
     sessionStorage.removeItem('user');
     dispatch(logout());
-    window.location.href = window.location.href;
+    _history.push('/');
   }
 
   jQuery(function ($) {
@@ -84,9 +84,9 @@ console.log ("user->", user[0].name)
                   </Link>
                 </li>
                 <li>
-                  {user &&<a href="#" className="nav-item nav-link">
+                  {user &&<Link to="/profile" className="nav-item nav-link">
                   <i className="fa fa-user-circle pr-2"></i>{user[0].name}
-                  </a>}
+                  </Link>}
                 </li>
                 <li>
                   <a
