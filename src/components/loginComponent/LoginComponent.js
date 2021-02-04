@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { login, logout } from '../../Redux/Actions/loggedActions';
 import { useSelector, useDispatch } from "react-redux";
+import './LoginComponent.css';
 import { CallApi } from "../../service/callApi";
 import { RegisterComponent } from "../registerComponent/RegisterComponent";
 
@@ -103,37 +104,116 @@ export const LoginComponent = () => {
       })
     }, 1000);
   }
-  
-//aumentare timeout per il refresh token
-  sessionStorage.getItem('authenticated') ? setInterval(() => { refreshToken() }, 3000) : null;
-   //sessionStorage.getItem('authenticated') ? setInterval(() => { refreshToken() }, 300000) : null;
+
+  //aumentare timeout per il refresh token
+  sessionStorage.getItem('authenticated') ? setInterval(() => { refreshToken() }, 300000) : null;
+
   return (
-    <div className="container">
-      <div className="col-5">
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit} className="form-group">
-          <label>Email</label>
-          <input
-            type="text"
-            name="email"
-            placeholder="Email"
-            value={userLogin.email}
-            onChange={handleChange}
-            className="form-control"
-          ></input>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={userLogin.password}
-            onChange={handleChange}
-            className="form-control"
-          ></input>
-          <button type='submit' className="btn btn-primary" disabled={!userLogin.email || !userLogin.password}>login</button>
-        </form>
-        <RegisterComponent />
+    <div className='container'>
+      <div className='row'>
+        <div className='col-md-7'>
+          <div className='title'>
+            <i className="fa fa-foursquare"></i>
+              aceGram
+          </div>
+          <div className='lowTitle'>
+            Solo parti originali
+          </div>
+        </div>
+        <div className='col-md-5 '>
+          <div className='body'>
+            <div className='l-form'>
+              <div className="form">
+                <form onSubmit={handleSubmit}>
+                  <h1 className='form__title'>Login</h1>
+
+                  <div className='form__div'>
+                    <input
+                      type="text"
+                      name="email"
+                      placeholder=" "
+                      value={userLogin.email}
+                      onChange={handleChange}
+                      className="form__input"
+                    ></input>
+                    <label className='form__label'>Email</label>
+                  </div>
+
+                  <div className='form__div'>
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder=" "
+                      value={userLogin.password}
+                      onChange={handleChange}
+                      className="form__input"
+                    ></input>
+                    <label className='form__label'>Password</label>
+                  </div>
+
+                  <button type='submit' className="form__button" disabled={!userLogin.email || !userLogin.password}>login</button>
+
+                </form>
+                <RegisterComponent />
+              </div>
+
+            </div>
+          </div>
+
+        </div>
       </div>
+
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // <div className="container">
+    //   <div className="col-5">
+    //     <h2>Login</h2>
+    //     <form onSubmit={handleSubmit} className="form-group">
+    //       <label>Email</label>
+    //       <input
+    //         type="text"
+    //         name="email"
+    //         placeholder="Email"
+    //         value={userLogin.email}
+    //         onChange={handleChange}
+    //         className="form-control"
+    //       ></input>
+    //       <label>Password</label>
+    //       <input
+    //         type="password"
+    //         name="password"
+    //         placeholder="Password"
+    //         value={userLogin.password}
+    //         onChange={handleChange}
+    //         className="form-control"
+    //       ></input>
+    //       <button type='submit' className="btn btn-primary" disabled={!userLogin.email || !userLogin.password}>login</button>
+    //     </form>
+    //     <RegisterComponent />
+    //   </div>
+    // </div>
   );
 };
