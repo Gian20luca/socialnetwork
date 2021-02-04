@@ -16,20 +16,21 @@ export const RegisterComponent = () => {
   });
 
 
+
   
-  let showModal = (event) => {
+  const showModal = (event) => {
     event.preventDefault();
     setViewModal(true);
   };
-  let deleteModal = (event) => {
+  const deleteModal = (event) => {
     event.preventDefault();
     setViewModal(false);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    service.postUser(register)
-    //console.log(register);
+    service.postUser(register);
+    setViewModal(false);
 
   };
 
@@ -40,18 +41,19 @@ export const RegisterComponent = () => {
       [event.target.name]: event.target.value,
     }));
   };
-  //console.log(viewModal, "-", register);
+
   return (
     <div >
       <div>
         <form onSubmit={showModal}>
-          <button type="submit">Registrati</button>
+          <button type="submit" className="btn btn-primary">Registrati</button>
         </form>
       </div>
 
       {viewModal && (
-        <div className="container modale">
-          <i className="fa fa-times-circle float-right" onClick={deleteModal}></i>
+        <div className="container modale" >
+          <h2>Register</h2>
+          <i className="fa fa-2x fa-times-circle 2x float-right mb-3" onClick={deleteModal}></i>
           {register && (
             <form onSubmit={handleSubmit} className="form-group">
               <label htmlFor="name">Nome </label>
@@ -100,9 +102,9 @@ export const RegisterComponent = () => {
                 onChange={handleChange}
               ></input>
 
-              <button type="submit" className="btn btn-primary  mt-3 col-3">
-                Invia
-              </button>
+            {!register.name || !register.surname ||!register.email|| !register.username ||  !register.password ? <button   disabled className="btn btn-danger  mt-3 col-3">
+                Registrati
+              </button>: <button type="submit"  className="btn btn-primary  mt-3 col-3">Registrati</button>}
             </form>
           )}
         </div>

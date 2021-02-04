@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { LoginComponent } from "../loginComponent/loginComponent";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../Redux/Actions/loggedActions";
+import { useSelector ,useDispatch} from "react-redux";
+import { login } from "../../Redux/Actions/loggedActions";
 import { PostComponent } from "../postComponent/PostComponent";
-
+import { CallApi } from "../../service/callApi";
+import {NavbarComponent} from "../../core/navBar/NavbarComponent"
 export const HomeComponent = () => {
+  //servis per user
+  let service = new CallApi.getInstance();
   const logged = useSelector((state) => state.loggedReducer);
   const dispatch = useDispatch();
+  useEffect(() => {
+    sessionStorage.getItem("authenticated") ? dispatch(login()) : null;
+  });
 
   return (
     <div>
@@ -14,14 +20,7 @@ export const HomeComponent = () => {
         <LoginComponent />
       ) : (
         <div>
-          <h1>connesso</h1>
-          <button
-            onClick={() => {
-              dispatch(logout());
-            }}
-          >
-            logout
-          </button>
+          <NavbarComponent/>
           <PostComponent />
         </div>
       )}

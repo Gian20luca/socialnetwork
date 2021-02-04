@@ -1,45 +1,66 @@
 import React, { useEffect, useState } from "react";
-import { login } from '../../Redux/Actions/loggedActions';
+import { login, logout } from '../../Redux/Actions/loggedActions';
 import { useSelector, useDispatch } from "react-redux";
 import { CallApi } from "../../service/callApi";
 import { RegisterComponent } from "../registerComponent/RegisterComponent";
- 
+
 export const LoginComponent = () => {
-  console.log('lu tokennn' , Token);
   //dati che inserisco dal form
   const [userLogin, setUserLogin] = useState({
     email: '',
-    password: '',
-    token: ''
+    password: ''
   });
   //dati che recupera dall' array di utenti grazie all' onChange sugli input
   const [controlUserLogin, setControlUserLogin] = useState({
   });
+  //token che mi serve per mandarlo all session storage e all user api, serve anche per il refresh
   const [Token, setToken] = useState('');
- 
+
   let service = new CallApi.getInstance();
   const logged = useSelector((state) => state.loggedReducer);
   const dispatch = useDispatch();
-  console.log("Connesso: ", logged);
   console.log("login: ", userLogin);
-  console.log("controllogin: ", controlUserLogin);
- 
+  console.log("CONTROLlogin: ", controlUserLogin);
+
   useEffect(() => {
     service.getUser(userLogin.email).then(response => setControlUserLogin(response.data));
   }, [userLogin.email]);
- 
+
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    controlUserLogin[0].email === userLogin.email && controlUserLogin[0].password === userLogin.password ? generateToken() : console.log('errore non sono uguali');
-    // !userLogin.token ? service.getUser(userLogin.email).then(response => setUserLogin({email: response.data[0].email, password: response.data[0].password, token: response.data[0].token })) : console.log('non esiste');
-    // userLogin.token === sessionStorage.getItem('token') ? dispatch(login()) : console.log('no funziona nu cazzu');
- 
+    if (controlUserLogin[0].email === userLogin.email && controlUserLogin[0].password === userLogin.password) {
+      console.log('TOKEN', Token)
+      sessionStorage.setItem('token', Token);
+      service.postUserLogin(controlUserLogin[0].id, Token);
+    } else {
+      console.log('Errore email e password sbagliati')
+    };
+    setTimeout(() => { service.getUser(userLogin.email).then(response => console.log('token user login handle submit', response.data[0].token)) }, 1000);
+    setTimeout(() => {
+      service.getUser(userLogin.email).then(response => {
+        let tokenApi = response.data[0].token;
+        if (tokenApi === sessionStorage.getItem('token')) {
+          dispatch(login());
+          sessionStorage.setItem('authenticated', true);
+          sessionStorage.setItem('user', JSON.stringify(controlUserLogin));
+          window.location.href = window.location.href;
+        } else {
+          console.log('Errore token api e sessionstorage token non sono uguali')
+        }
+      })
+    }, 1000);
+
   }
- 
+
   const handleChange = (event) => {
     setUserLogin((preUserLogin) => ({ ...preUserLogin, [event.target.name]: event.target.value, }));
+    generateToken();
   }
- 
+
   const generateToken = () => {
     let rand = Math.random().toString(36).substr(2);
     let token = () => {
@@ -49,22 +70,67 @@ export const LoginComponent = () => {
       }
       return random
     };
-    setToken(token());
-    console.log('tokenstato:', Token);
-    sessionStorage.setItem('token', Token);
-    service.postUserLogin(controlUserLogin[0].id,Token);
+    let tokenn = token();
+    setToken(tokenn);
+    console.log('TokenChange', Token)
   }
- 
+
+  const refreshToken = () => {
+    let rand = Math.random().toString(36).substr(2);
+    let token = () => {
+      let random = rand;
+      for (let i = 0; i < 101; i++) {
+        random = random + Math.random().toString(36).substr(2);
+      }
+      return random
+    };
+    let tokenn = token();
+    console.log('TokenChange', tokenn)
+    let user = JSON.parse(sessionStorage.getItem('user'));
+    console.log(user[0].id);
+    service.postUserLogin(user[0].id, tokenn);
+    setTimeout(() => {
+      service.getUser(user[0].email).then(response => {
+        let refreshtokenapi = response.data[0].token;
+        if (refreshtokenapi !== sessionStorage.getItem('token')) {
+          dispatch(logout());
+          sessionStorage.removeItem('authenticated');
+          sessionStorage.removeItem('user');
+          sessionStorage.removeItem('token');
+          window.location.href = window.location.href;
+        }
+        else { null }
+      })
+    }, 1000);
+  }
+  
+//aumentare timeout per il refresh token
+  sessionStorage.getItem('authenticated') ? setInterval(() => { refreshToken() }, 3000) : null;
+   //sessionStorage.getItem('authenticated') ? setInterval(() => { refreshToken() }, 300000) : null;
   return (
-    <div>
-      <button onClick={generateToken}>generateToken</button>
-      <div>
-        <form onSubmit={handleSubmit}>
+    <div className="container">
+      <div className="col-5">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit} className="form-group">
           <label>Email</label>
-          <input type='text' name='email' placeholder='Email' value={userLogin.email} onChange={handleChange}></input>
+          <input
+            type="text"
+            name="email"
+            placeholder="Email"
+            value={userLogin.email}
+            onChange={handleChange}
+            className="form-control"
+          ></input>
           <label>Password</label>
-          <input type='password' name='password' placeholder='Password' value={userLogin.password} onChange={handleChange}></input>
-          <button type='submit'>login</button>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={userLogin.password}
+            onChange={handleChange}
+            className="form-control"
+          ></input>
+          <button type='submit' className="btn btn-primary" disabled={!userLogin.email || !userLogin.password}>login</button>
         </form>
         <RegisterComponent />
       </div>
