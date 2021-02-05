@@ -12,20 +12,20 @@ export class CallApi {
   static setInstance(_instance) {
     instance = _instance;
   }
-//Get User Api
-getUser = (email) => {
-  return axios.get('https://60181603971d850017a3f861.mockapi.io/users/?email=' + email)
+  //Get User Api
+  getUser = (email) => {
+    return axios.get('https://60181603971d850017a3f861.mockapi.io/users/?email=' + email)
 
-}
-//post user login
-postUserLogin = (id,token) => {
-  let proxycors = 'https://cors-anywhere.herokuapp.com/';
-  let url =  proxycors + 'https://60181603971d850017a3f861.mockapi.io/users/' + id;
-  return axios.patch(url , {
-    token: token,
-  })
-}
- 
+  }
+  //post user login
+  postUserLogin = (id, token) => {
+    let proxycors = 'https://cors-anywhere.herokuapp.com/';
+    let url = proxycors + 'https://60181603971d850017a3f861.mockapi.io/users/' + id;
+    return axios.patch(url, {
+      token: token,
+    })
+  }
+
 
   //post User
   postUser(datavalue) {
@@ -37,9 +37,8 @@ postUserLogin = (id,token) => {
   }
 
   //GetPost
-  getPosts = () => {
+  getPostsSingleUser = (iduser) => {
     return axios
-      .get(" https://60181603971d850017a3f861.mockapi.io/posts/")
-      
+      .get(" https://60181603971d850017a3f861.mockapi.io/users/" + iduser + "/posts");
   };
 }

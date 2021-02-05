@@ -21,7 +21,8 @@ export const HomeComponent = () => {
       ) : (
         <div>
           <NavbarComponent/>
-          <PostComponent />
+          {/* <PostComponent /> */}
+          post di tutti gli utenti in random
         </div>
       )}
     </div>

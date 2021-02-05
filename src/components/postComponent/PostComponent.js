@@ -9,7 +9,7 @@ export const PostComponent = () => {
   useEffect(() => {
     service.getPosts().then((response) => setPost(response.data));
   }, []);
- 
+  
   /*  const showComment=(event)=>{
     event.preventDefault();
     return console.log("commet")
